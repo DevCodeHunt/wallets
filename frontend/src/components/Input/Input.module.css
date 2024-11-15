@@ -1,0 +1,39 @@
+.input {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-size: 14px;
+  }
+
+  small {
+    color: red;
+    padding: 2px;
+  }
+}
+
+.inputBox {
+  flex: 1;
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10px;
+    color: #666666;
+  }
+
+  input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 4px;
+    outline: none;
+    border: 1px solid #99999970;
+    padding-left: 2.2rem;
+  }
+}
+
+.inputBox input::placeholder {
+  color: #999999;
+}

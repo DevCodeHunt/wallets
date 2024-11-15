@@ -1,0 +1,63 @@
+.walletContainer {
+  padding: 1rem;
+}
+
+.currentWalletHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.currentWalletHeaderAction {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.currentWalletHeaderAction button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.currentWalletBalance {
+  font-size: 2rem;
+}
+
+.createWallerBtn {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.wallets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 967px) {
+  .wallets {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .wallets {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 567px) {
+  .wallets {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,44 @@
+.wallet {
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.walletHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+}
+
+.walletHeader .walletIcon {
+    width: 2rem;
+    height: 2rem;
+    color: #444444;
+
+}
+
+.walletHeader h4 {
+   color: #111;
+}
+
+.walletBody {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-top: 1rem;
+}
+
+.walletBody .balance {
+    font-size: 1.5rem;
+    color: #444444;
+
+}
+
+.walletBody .date {
+    color: #999;
+    font-size: 14px;
+}
