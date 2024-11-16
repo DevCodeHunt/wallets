@@ -6,8 +6,8 @@ import { WalletContextProvider } from "./context/WalletContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <WalletContextProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
   </WalletContextProvider>
 );

@@ -1,0 +1,82 @@
+.transactionContainer {
+  padding-block: 2rem;
+}
+
+.transactionList {
+  position: relative;
+  width: 100%;
+  background-color: white;
+  border-radius: 4px;
+  border: 1px solid #99999980;
+  overflow-x: auto;
+  margin-block: 2rem;
+  height: 300px;
+}
+
+.transactionList table {
+  width: 100%;
+  border-radius: 4px;
+  border-collapse: collapse;
+}
+
+.transactionList table thead {
+  background-color: #cccccc40;
+}
+
+.transactionList table th {
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.transactionList table th,
+.transactionList table td {
+  padding: 12px;
+  text-align: left;
+}
+
+.transactionNotFound {
+  background-color: #fff;
+  margin: 20px auto;
+  max-width: 400px;
+  text-align: center;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
+}
+
+.pagination > button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.pagination .page.active {
+  background-color: #444444;
+  color: white;
+}
+
+.navStyles {
+  display: flex;
+  justify-content: space-between;
+}
+
+.downloadIcon {
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+}
+@media (max-width: 967px) {
+  .transactionList table {
+    width: 900px;
+  }
+}

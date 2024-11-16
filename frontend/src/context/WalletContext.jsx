@@ -1,45 +1,44 @@
-import { createContext, useEffect, useState } from "react";
-import { getWallet, getWallets } from "../services/walletService";
+import {createContext, useEffect, useState} from "react"
+import {getWallet} from "../services/walletService"
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const WalletContext = createContext({});
+export const WalletContext = createContext({})
 
-export const WalletContextProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [wallets, setWallets] = useState([]);
-  const [error, setError] = useState(null);
-  const [activeWalletId, setActiveWalletId] = useState(
-    localStorage.getItem("activeWalletId")
-  );
+export const WalletContextProvider = ({children}) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [wallets, setWallets] = useState([])
+  const [error, setError] = useState(null)
+  const [activeWalletId, setActiveWalletId] = useState(localStorage.getItem("activeWalletId"))
 
-  const [wallet, setWallet] = useState(null);
+  const [wallet, setWallet] = useState(null)
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
+    const loadWalletData = async () => {
+      setIsLoading(true)
       try {
-        const data = await getWallet(activeWalletId);
-        setWallet(data);
+        const data = await getWallet(activeWalletId)
+        setWallet(data)
       } catch (error) {
-        console.error(error);
+        setError(error)
       } finally {
-        setIsLoading(false);
+        setIsLoading(false)
       }
-    })();
-  }, [activeWalletId]);
+    }
+    if (activeWalletId) loadWalletData()
+  }, [activeWalletId])
 
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      try {
-        const data = await getWallets();
-        setWallets(data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const data = await getWallets();
+  //       setWallets(data);
+  //     } catch (error) {
+  //       setError(error);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <WalletContext.Provider
@@ -56,5 +55,5 @@ export const WalletContextProvider = ({ children }) => {
     >
       {children}
     </WalletContext.Provider>
-  );
-};
+  )
+}

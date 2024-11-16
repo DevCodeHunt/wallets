@@ -26,6 +26,7 @@ button {
 }
 
 .container {
+  height: 100vh;
   max-width: 1200px;
   width: 100%;
   margin-inline: auto;
@@ -33,7 +34,7 @@ button {
 }
 
 .primary {
-  background-color: #236bfe;
+  background-color: #444444;;
   color: white;
   padding: 12px;
   border-radius: 4px;
@@ -45,7 +46,7 @@ button {
   gap: 0.3rem;
 }
 
-.modal {
+.modalContainer {
   position: fixed;
   background: rgba(0, 0, 0, 0.4);
   inset: 0;

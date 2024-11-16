@@ -45,7 +45,7 @@ const CreateWalletModal = ({ setOpen }) => {
 
   const { name, balance } = values;
   return (
-    <div className="modal">
+    <div className="modalContainer">
       <div className="modalCard">
         <div className={styles.modalHeader}>
           <h2>Create Wallet</h2>
