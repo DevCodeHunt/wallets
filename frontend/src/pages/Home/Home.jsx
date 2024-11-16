@@ -5,22 +5,34 @@ import useWallets from "../../hooks/useWallets";
 import styles from "./Home.module.css";
 import CreateWalletModal from "../../components/Modals/CreateWalletModal";
 import { useCallback, useState } from "react";
+import WalletTransactionModal from "../../components/Modals/WalletTransactionModal";
 
 const Home = () => {
   const [openCreateWalletModal, setOpenCreateWalletModal] = useState(false);
-  const { wallets, isLoading, activeWalletId } = useWallets();
+  const [openWalletTransactionModal, setOpenWalletTransactionModal] =
+    useState(false);
+  const { wallets, isLoading, wallet: activeWallet } = useWallets();
+ 
 
   const handleOpenCreateWalletModal = useCallback(
     () => setOpenCreateWalletModal((prev) => !prev),
     []
   );
 
-  const activeWallet = wallets?.find((wallet) => wallet?.id === activeWalletId);
+  const handleOpenstartTransactionModal = useCallback(() => {
+    setOpenWalletTransactionModal((prev) => !prev);
+  }, []);
+console.log(activeWallet);
+
+  // const activeWallet = wallets?.find((wallet) => wallet?.id === activeWalletId);
 
   return (
     <>
       {openCreateWalletModal && (
         <CreateWalletModal setOpen={setOpenCreateWalletModal} />
+      )}
+      {openWalletTransactionModal && (
+        <WalletTransactionModal setOpen={setOpenWalletTransactionModal} />
       )}
       <div className={`container ${styles.walletContainer}`}>
         {isLoading ? (
@@ -31,7 +43,11 @@ const Home = () => {
               <div className={styles.currentWalletHeader}>
                 <h2>{activeWallet?.name}</h2>
                 <div className={styles.currentWalletHeaderAction}>
-                  <button className="primary">
+                  <button
+                    type="button"
+                    onClick={handleOpenstartTransactionModal}
+                    className="primary"
+                  >
                     <ArrowUpFromLine size={18} /> Start Transaction
                   </button>
                 </div>

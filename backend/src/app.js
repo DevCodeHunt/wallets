@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import errorHandlerMiddleware from "./middlewares/errorMiddleware.js";
 import walletRoutes from "./routes/wallet.routes.js";
+import transactionRoutes from "./routes/transaction.routes.js";
 const app = express();
 
 app.use(cors());
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/", walletRoutes);
+app.use("/", transactionRoutes);
 
 app.use("*", (req, res) => {
   res.status(404).json({

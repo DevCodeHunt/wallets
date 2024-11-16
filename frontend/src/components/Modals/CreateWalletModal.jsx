@@ -1,4 +1,4 @@
-import styles from "./CreateWalletModal.module.css";
+import styles from "./Modal.module.css";
 import { HandCoins, Wallet, X } from "lucide-react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -66,6 +66,7 @@ const CreateWalletModal = ({ setOpen }) => {
           />
           <Input
             id="balance"
+            name="balance"
             label="Wallet balance"
             icon={HandCoins}
             placeholder="eg. 20, 74.45,"

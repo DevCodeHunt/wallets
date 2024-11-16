@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { getWallets } from "../services/walletService";
+import { getWallet, getWallets } from "../services/walletService";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const WalletContext = createContext({});
@@ -11,6 +11,21 @@ export const WalletContextProvider = ({ children }) => {
   const [activeWalletId, setActiveWalletId] = useState(
     localStorage.getItem("activeWalletId")
   );
+
+  const [wallet, setWallet] = useState(null);
+  useEffect(() => {
+    (async () => {
+      setIsLoading(true);
+      try {
+        const data = await getWallet(activeWalletId);
+        setWallet(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
+  }, [activeWalletId]);
 
   useEffect(() => {
     (async () => {
@@ -25,6 +40,7 @@ export const WalletContextProvider = ({ children }) => {
       }
     })();
   }, []);
+
   return (
     <WalletContext.Provider
       value={{
@@ -34,6 +50,8 @@ export const WalletContextProvider = ({ children }) => {
         setWallets,
         activeWalletId,
         setActiveWalletId,
+        wallet,
+        setWallet,
       }}
     >
       {children}

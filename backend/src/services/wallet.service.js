@@ -8,11 +8,9 @@ class WalletService {
     return await Wallet.create(data);
   }
 
-  async getWallet(id) {}
-
-  async updateWallet(id, data) {}
-
-  async deleteWallet(id) {}
+  async getWallet(id) {
+    return await Wallet.findById(id);
+  }
 }
 
 const walletService = new WalletService();
