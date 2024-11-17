@@ -9,8 +9,8 @@
   border-radius: 4px;
   border: 1px solid #99999980;
   overflow-x: auto;
-  margin-block: 2rem;
-  height: 300px;
+  margin-block: 1rem;
+  height: 475px;
 }
 
 .transactionList table {
@@ -30,7 +30,7 @@
 
 .transactionList table th,
 .transactionList table td {
-  padding: 12px;
+  padding: 9px;
   text-align: left;
 }
 
@@ -74,6 +74,11 @@
   width: 2rem;
   height: 2rem;
   cursor: pointer;
+}
+.sortIcon {
+  margin-left: 2px;
+  width: 1rem;
+  height: 1rem;
 }
 @media (max-width: 967px) {
   .transactionList table {

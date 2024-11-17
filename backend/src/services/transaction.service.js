@@ -10,14 +10,19 @@ class TransactionService {
   }
 
   async getTransactions(query) {
-    const {walletId, isExport} = query
+    let {walletId, isExport, skip, limit, sortField, sortDirection} = query
+    console.log(walletId, isExport, skip, limit, sortField, sortDirection)
+    let sortBy = {}
+    if (sortField) {
+      sortBy[sortField] = parseInt(sortDirection)
+    }
     if (isExport === "true") {
-      const transactions = await Transaction.find({walletId})
+      const transactions = await Transaction.find({walletId}, {_id: 0, walletId: 0, __v: 0}).sort(sortBy).lean()
       return transactions
     } else {
-      const skip = parseInt(query.skip) || 0
-      const limit = parseInt(query.limit) || 5
-      const [transactions, total] = await Promise.all([Transaction.find({walletId}).skip(skip).limit(limit).sort({createdAt: -1}), Transaction.countDocuments({walletId})])
+      skip = parseInt(skip) || 0
+      limit = parseInt(limit) || 10
+      const [transactions, total] = await Promise.all([Transaction.find({walletId}).skip(skip).limit(limit).sort(sortBy), Transaction.countDocuments({walletId})])
       return {
         transactions,
         total,

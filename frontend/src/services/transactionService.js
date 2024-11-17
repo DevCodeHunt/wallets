@@ -6,15 +6,16 @@ export const createTransaction = async (walletId, data) => {
 }
 
 export const getTransactions = async (query) => {
-  let url = `/transactions?walletId=${query.walletId}`
-  if (query.limit) url += `&limit=${query.limit}`
-  if (query.skip) url += `&skip=${query.skip}`
+  let url = `/transactions?walletId=${query.walletId}&limit=${query.limit || 10}&skip=${query.skip || 0}`
   if (query.isExport) {
     url += `&isExport=${query.isExport}`
     const transactions = await apiClient.get(url, {
       responseType: "blob",
     })
     return transactions.data
+  }
+  if (query.sortField) {
+    url += `&sortField=${query.sortField}&sortDirection=${query.sortDirection}`
   }
   const transactions = await apiClient.get(url)
   return transactions.data

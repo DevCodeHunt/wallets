@@ -6,7 +6,7 @@ const transactionSchema = new Schema(
     walletId: {type: Schema.Types.ObjectId, ref: "Wallet"},
     amount: {type: Number, required: true},
     description: {type: String},
-    type: {type: String, enum: ["DEBIT", "CREDIT"], required: true},
+    type: {type: String, enum: ["debit", "credit"], required: true},
     date: {type: Date, default: Date.now()},
     balance: {type: Number},
   },
