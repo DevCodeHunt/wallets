@@ -1,12 +1,7 @@
 import Transaction from "../models/Transaction.js"
-import crypto from "crypto"
 class TransactionService {
-  async createTransaction(data) {
-    const schema = {
-      ...data,
-      transactionId: crypto.randomInt(1000000000, 9999999999).toString(),
-    }
-    return await Transaction.create(schema)
+  async createTransaction(transaction) {
+    return await Transaction.create(transaction)
   }
 
   async getTransactions(query) {
@@ -30,9 +25,9 @@ class TransactionService {
     }
   }
 
-  async getTransaction(transactionId, walletId) {
-    return await Transaction.findOne({wallet: walletId, transactionId})
-  }
+  // async createTransaction(transaction, session) {
+  //   return await Transaction.create(transaction, {session})
+  // }
 }
 
 const transactionService = new TransactionService()

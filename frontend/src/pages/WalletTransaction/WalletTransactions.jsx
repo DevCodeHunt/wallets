@@ -104,7 +104,7 @@ const WalletTransaction = () => {
             <tbody>
               {transactions?.map((transaction, index) => (
                 <tr key={index}>
-                  <td>{transaction._id}</td>
+                  <td>{transaction.transactionId}</td>
                   <td>{transaction.type}</td>
                   <td>₹ {transaction.amount}</td>
                   <td>{transaction.description}</td>
@@ -115,7 +115,7 @@ const WalletTransaction = () => {
           </table>
         ) : (
           <div className={styles.transactionNotFound}>
-            <p> No transactions found for the wallet......!!</p>
+            <p> No transactions record found!!</p>
           </div>
         )}
         {isLoading ? <Overlay /> : null}

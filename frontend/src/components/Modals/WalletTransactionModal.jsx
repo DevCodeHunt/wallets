@@ -39,7 +39,7 @@ const WalletTransactionModal = ({setOpen}) => {
           description: values.description,
         }
         let response = await createTransaction(wallet?.id, responseBody)
-        if (response?.balance) {
+        if (response?.balance >= 0) {
           const updatedWallet = {...wallet, balance: response.balance}
           setWallet(updatedWallet)
         }
@@ -68,7 +68,7 @@ const WalletTransactionModal = ({setOpen}) => {
             <X size={18} />
           </button>
         </div>
-        <p>Your current wallet balance is ${wallet?.balance}</p>
+        <p>Your current wallet balance is ₹ {wallet?.balance}</p>
         <form onSubmit={handleSubmit} className={styles.modalForm}>
           <Input id="amount" name="amount" label="Transaction amount" icon={HandCoins} placeholder="eg. 20, 74.45" value={amount} onChange={handleChange} error={errors?.amount} />
           <Input id="description" label="Transaction description" icon={Shield} name="description" placeholder="eg. Recharge" value={description} onChange={handleChange} error={errors?.description} />

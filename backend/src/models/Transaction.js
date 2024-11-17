@@ -2,7 +2,6 @@ import {model, Schema} from "mongoose"
 
 const transactionSchema = new Schema(
   {
-    transactionId: {type: String, required: true},
     walletId: {type: Schema.Types.ObjectId, ref: "Wallet"},
     amount: {type: Number, required: true},
     description: {type: String},
@@ -13,7 +12,9 @@ const transactionSchema = new Schema(
   {
     toJSON: {
       transform: (doc, ret) => {
+        ret.transactionId = ret._id
         delete ret.__v
+        delete ret._id
         return ret
       },
     },
