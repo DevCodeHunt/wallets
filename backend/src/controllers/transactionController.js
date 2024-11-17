@@ -8,27 +8,20 @@ export const createTransaction = asyncHandler(async (req, res) => {
   const wallet = await walletService.getWallet(walletId)
   if (!wallet) return res.status(404).json({message: "Wallet not found"})
   const amount = parseFloat(req.body.amount)
-  const {transactionType} = req.body
-
-  if (transactionType === "debit") {
-    if (wallet.balance <= 0) {
-      return res.status(400).json({message: "Cannot deduct from a zero balance"})
-    }
-    if (wallet.balance < amount) {
-      return res.status(400).json({message: "Insufficient balance"})
-    }
-
-    wallet.balance -= amount
-    await wallet.save()
-  } else {
-    wallet.balance += amount
-    await wallet.save()
+  if (isNaN(amount) || !/^\d+(\.\d{1,4})?$/.test(Math.abs(amount)) || amount == 0) {
+    return res.status(400).json({message: "Amount must be a valid number with up to 4 digits after the decimal."})
   }
-
+  if (amount < 0 && wallet.balance < Math.abs(amount)) {
+    return res.status(400).json({message: "Insufficient balance"})
+  }
+  wallet.balance += amount
+  await wallet.save()
   const transaction = await transactionService.createTransaction({
     ...req.body,
-    wallet: walletId,
+    type: amount > 0 ? "CREDIT" : "DEBIT",
+    walletId,
     amount: parseFloat(amount),
+    balance: wallet.balance,
   })
   res.json(transaction)
 })
@@ -39,7 +32,6 @@ export const getTransactions = asyncHandler(async (req, res) => {
   if (!wallet) return res.status(404).json({message: "Wallet not found"})
   const transactions = await transactionService.getTransactions(req.query)
   if (isExport === "true") {
-    console.log(transactions)
     const fields = ["_id", "amount", "wallet", "createdAt"]
     const json2csvParser = new Parser({fields})
     const csv = json2csvParser.parse(transactions)

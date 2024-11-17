@@ -4,6 +4,6 @@ import {createTransaction, getTransactions} from "../controllers/transactionCont
 const router = express.Router()
 
 router.get("/transactions", getTransactions)
-router.post("/transaction/:walletId", createTransaction)
+router.post("/transact/:walletId", createTransaction)
 
 export default router

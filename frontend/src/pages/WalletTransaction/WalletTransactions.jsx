@@ -13,7 +13,6 @@ const WalletTransaction = () => {
   let [page, setPage] = useState(1)
   let [totalPages, setTotalPages] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  //const {wallet} = useWallets()
   const [transactions, setTransactions] = useState([])
 
   useEffect(() => {
@@ -65,9 +64,7 @@ const WalletTransaction = () => {
           Back{" "}
         </button>
         <h2>Transaction Details</h2>
-        <span>
-          <Download className={styles.downloadIcon} onClick={downloadCSV} />
-        </span>
+        <span>{transactions.length > 0 ? <Download className={styles.downloadIcon} onClick={downloadCSV} /> : null}</span>
       </div>
       {isLoading ? (
         <p>Loading transactions...</p>

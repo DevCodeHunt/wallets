@@ -6,19 +6,18 @@ class TransactionService {
       ...data,
       transactionId: crypto.randomInt(1000000000, 9999999999).toString(),
     }
-
     return await Transaction.create(schema)
   }
 
   async getTransactions(query) {
     const {walletId, isExport} = query
     if (isExport === "true") {
-      const transactions = await Transaction.find({wallet: walletId})
+      const transactions = await Transaction.find({walletId})
       return transactions
     } else {
       const skip = parseInt(query.skip) || 0
       const limit = parseInt(query.limit) || 5
-      const [transactions, total] = await Promise.all([Transaction.find({wallet: walletId}).skip(skip).limit(limit).sort({createdAt: -1}), Transaction.countDocuments({wallet: walletId})])
+      const [transactions, total] = await Promise.all([Transaction.find({walletId}).skip(skip).limit(limit).sort({createdAt: -1}), Transaction.countDocuments({walletId})])
       return {
         transactions,
         total,

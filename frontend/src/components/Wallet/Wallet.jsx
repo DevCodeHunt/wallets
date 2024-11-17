@@ -10,6 +10,8 @@ const Wallet = ({wallet, handleOpenstartTransactionModal}) => {
     navigate("/wallet-transaction", {state: {walletId: wallet.id}})
   }
 
+  const formatBalance = (balance) => (Number.isInteger(balance) ? balance : parseFloat(balance.toFixed(4)))
+
   return (
     <div className={styles.walletContainer}>
       <div className={styles.wallet}>
@@ -18,7 +20,7 @@ const Wallet = ({wallet, handleOpenstartTransactionModal}) => {
           <h4>{wallet?.name}</h4>
         </div>
         <div className={styles.walletBody}>
-          <p className={styles.balance}>₹ {wallet?.balance}</p>
+          <p className={styles.balance}>₹ {formatBalance(wallet?.balance || 0)}</p>
           <p className={styles.date}>{dayjs(wallet?.date).format("DD MMM, YYYY")}</p>
         </div>
         <div className={styles.walletActions}>

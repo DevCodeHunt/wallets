@@ -1,7 +1,7 @@
 import apiClient from "../api/apiClient"
 
 export const createTransaction = async (walletId, data) => {
-  const transaction = await apiClient.post(`/transaction/${walletId}`, data)
+  const transaction = await apiClient.post(`/transact/${walletId}`, data)
   return transaction.data
 }
 
@@ -12,7 +12,7 @@ export const getTransactions = async (query) => {
   if (query.isExport) {
     url += `&isExport=${query.isExport}`
     const transactions = await apiClient.get(url, {
-      responseType: "blob", // To handle binary data
+      responseType: "blob",
     })
     return transactions.data
   }
