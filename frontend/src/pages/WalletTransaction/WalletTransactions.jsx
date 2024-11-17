@@ -4,6 +4,7 @@ import {useEffect, useState} from "react"
 import {getTransactions} from "../../services/transactionService"
 import dayjs from "dayjs"
 import {ChevronLeft, ChevronRight, Download, ArrowDownAZ, ArrowUpAZ, ArrowDownUp} from "lucide-react"
+import Overlay from "../../components/Overlay/Overlay"
 
 const WalletTransaction = () => {
   const navigate = useNavigate()
@@ -40,6 +41,7 @@ const WalletTransaction = () => {
 
   const downloadCSV = async () => {
     try {
+      setIsLoading(true)
       let response = await getTransactions({walletId, isExport: true})
       const url = window.URL.createObjectURL(new Blob([response]))
       const link = document.createElement("a")
@@ -49,6 +51,8 @@ const WalletTransaction = () => {
       link.click()
     } catch (error) {
       console.error("Error exporting transactions:", error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -74,52 +78,48 @@ const WalletTransaction = () => {
         <h2>Transaction Details</h2>
         <span>{transactions.length > 0 ? <Download className={styles.downloadIcon} onClick={downloadCSV} /> : null}</span>
       </div>
-      {isLoading ? (
-        <p>Loading transactions...</p>
-      ) : (
-        <>
-          <div className={styles.transactionList}>
-            {transactions.length > 0 ? (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Transaction ID</th>
-                    <th>Transaction Type</th>
-                    <th onClick={() => handleSort("amount")} style={{cursor: "pointer", width: "160px"}} title="Click to sort by Amount">
-                      <div style={{display: "flex", alignItems: "center"}}>
-                        Amount
-                        {sort.field === "amount" ? sort.direction === 1 ? <ArrowDownAZ className={styles.sortIcon} /> : <ArrowUpAZ className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
-                      </div>
-                    </th>
-                    <th>Description</th>
-                    <th onClick={() => handleSort("date")} style={{cursor: "pointer"}} title="Click to sort by Transaction Date">
-                      <div style={{display: "flex", alignItems: "center"}}>
-                        Transaction Date
-                        {sort.field === "date" ? sort.direction === 1 ? <ArrowDownAZ className={styles.sortIcon} /> : <ArrowUpAZ className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions?.map((transaction, index) => (
-                    <tr key={index}>
-                      <td>{transaction._id}</td>
-                      <td style={{textTransform: "capitalize"}}>{transaction.type}</td>
-                      <td>₹ {transaction.amount}</td>
-                      <td>{transaction.description}</td>
-                      <td>{dayjs(transaction.date).format("DD-MM-YYYY")}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div className={styles.transactionNotFound}>
-                <p>No transactions found for the wallet!!</p>
-              </div>
-            )}
+
+      <div className={styles.transactionList}>
+        {transactions.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Transaction Type</th>
+                <th onClick={() => handleSort("amount")} style={{cursor: "pointer", width: "160px"}} title="Click to sort by Amount">
+                  <div style={{display: "flex", alignItems: "center"}}>
+                    Amount
+                    {sort.field === "amount" ? sort.direction === 1 ? <ArrowDownAZ className={styles.sortIcon} /> : <ArrowUpAZ className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
+                  </div>
+                </th>
+                <th>Description</th>
+                <th onClick={() => handleSort("date")} style={{cursor: "pointer"}} title="Click to sort by Transaction Date">
+                  <div style={{display: "flex", alignItems: "center"}}>
+                    Transaction Date
+                    {sort.field === "date" ? sort.direction === 1 ? <ArrowDownAZ className={styles.sortIcon} /> : <ArrowUpAZ className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactions?.map((transaction, index) => (
+                <tr key={index}>
+                  <td>{transaction._id}</td>
+                  <td style={{textTransform: "capitalize"}}>{transaction.type}</td>
+                  <td>₹ {transaction.amount}</td>
+                  <td>{transaction.description}</td>
+                  <td>{dayjs(transaction.date).format("DD-MM-YYYY")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className={styles.transactionNotFound}>
+            <p> No transactions found for the wallet......!!</p>
           </div>
-        </>
-      )}
+        )}
+        {isLoading ? <Overlay /> : null}
+      </div>
       {totalPages > 0 && (
         <div className={styles.pagination}>
           <div className="pagination"></div>
