@@ -51,6 +51,7 @@ export const getTransactions = asyncHandler(async (req, res) => {
 /*
  */
 //implementation of transactions to
+
 export const createTransaction = asyncHandler(async (req, res) => {
   const session = await mongoose.startSession()
   session.startTransaction() // Start the transaction
@@ -63,8 +64,7 @@ export const createTransaction = asyncHandler(async (req, res) => {
     }
 
     const amount = parseFloat(req.body.amount)
-    // Validate amount (no need to use Math.abs in regex check)
-    if (isNaN(amount) || !/^\d+(\.\d{1,4})?$/.test(Math.abs(amount)) || amount == 0) {
+    if (isNaN(amount) || !/^\d+(\.\d{1,4})?$/.test(Math.abs(amount)) || amount === 0) {
       return res.status(400).json({message: "Please enter a valid amount with up to 4 digits after the decimal."})
     }
 
@@ -79,7 +79,7 @@ export const createTransaction = asyncHandler(async (req, res) => {
     await wallet.save({session})
 
     // Create the transaction
-    await transactionService.createTransaction(
+    const transaction = await transactionService.createTransaction(
       {
         ...req.body,
         type: amount > 0 ? "CREDIT" : "DEBIT",
@@ -90,19 +90,28 @@ export const createTransaction = asyncHandler(async (req, res) => {
       session
     )
 
-    // Commit the transaction
+    // Commit the transaction only if all steps are successful
     await session.commitTransaction()
     session.endSession()
 
     // Send the transaction response
-    res.json(transaction)
+    console.log("return", transaction)
+    return res.json(transaction[0])
   } catch (error) {
+    console.log(error.stack)
     // Abort transaction in case of error
     await session.abortTransaction()
     session.endSession()
 
     // Return the error message to the client
     res.status(400).json({message: error.message})
+  } finally {
+    // Ensure session is ended after the transaction is committed or aborted
+    if (session.inTransaction()) {
+      await session.commitTransaction()
+    }
+    session.endSession()
   }
 })
+
 //*/

@@ -1,15 +1,14 @@
 import Transaction from "../models/Transaction.js"
 class TransactionService {
-  async createTransaction(transaction) {
-    return await Transaction.create(transaction)
-  }
+  // async createTransaction(transaction) {
+  //   return await Transaction.create(transaction)
+  // }
 
   async getTransactions(query) {
     let {walletId, isExport, skip, limit, sortField, sortDirection} = query
-    console.log(query)
-    let sortBy = {}
+    let sortBy = {date: -1}
     if (sortField) {
-      sortBy[sortField] = parseInt(sortDirection)
+      sortBy = {[sortField]: parseInt(sortDirection)}
     }
     if (isExport === "true") {
       const transactions = await Transaction.find({walletId}, {_id: 0, walletId: 0, __v: 0}).sort({date: 1}).lean()
@@ -25,9 +24,10 @@ class TransactionService {
     }
   }
 
-  // async createTransaction(transaction, session) {
-  //   return await Transaction.create(transaction, {session})
-  // }
+  async createTransaction(transaction, session) {
+    console.log("transaction", transaction)
+    return await Transaction.create([transaction], {session})
+  }
 }
 
 const transactionService = new TransactionService()
