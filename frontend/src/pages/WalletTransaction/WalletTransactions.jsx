@@ -76,7 +76,7 @@ const WalletTransaction = () => {
           Back{" "}
         </button>
         <h2>Transaction Details</h2>
-        <span>{transactions.length > 0 ? <Download className={styles.downloadIcon} onClick={downloadCSV} /> : null}</span>
+        <div style={{width: "50px"}}>{transactions.length > 0 ? <Download className={styles.downloadIcon} onClick={downloadCSV} /> : " "}</div>
       </div>
 
       <div className={styles.transactionList}>
