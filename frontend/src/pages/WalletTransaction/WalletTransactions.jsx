@@ -53,7 +53,6 @@ const WalletTransaction = () => {
   }
 
   const handleSort = (field) => {
-    console.log(field)
     setSort((prevSort) => ({
       field,
       direction: prevSort.field === field && prevSort.direction === 1 ? -1 : 1,

@@ -11,7 +11,6 @@ class TransactionService {
 
   async getTransactions(query) {
     let {walletId, isExport, skip, limit, sortField, sortDirection} = query
-    console.log(walletId, isExport, skip, limit, sortField, sortDirection)
     let sortBy = {}
     if (sortField) {
       sortBy[sortField] = parseInt(sortDirection)
