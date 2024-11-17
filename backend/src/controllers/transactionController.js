@@ -19,7 +19,7 @@ export const createTransaction = asyncHandler(async (req, res) => {
   await wallet.save()
   const transaction = await transactionService.createTransaction({
     ...req.body,
-    type: amount > 0 ? "credit" : "debit",
+    type: amount > 0 ? "CREDIT" : "DEBIT",
     walletId,
     amount: Math.abs(amount),
     balance: wallet.balance,

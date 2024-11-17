@@ -3,7 +3,7 @@ import styles from "./WalletTransactions.module.css"
 import {useEffect, useState} from "react"
 import {getTransactions} from "../../services/transactionService"
 import dayjs from "dayjs"
-import {ChevronLeft, ChevronRight, Download, ArrowDownAZ, ArrowUpAZ, ArrowDownUp} from "lucide-react"
+import {ChevronLeft, ChevronRight, Download, ArrowDown01, ArrowUp10, ArrowDownUp} from "lucide-react"
 import Overlay from "../../components/Overlay/Overlay"
 
 const WalletTransaction = () => {
@@ -89,14 +89,14 @@ const WalletTransaction = () => {
                 <th onClick={() => handleSort("amount")} style={{cursor: "pointer", width: "160px"}} title="Click to sort by Amount">
                   <div style={{display: "flex", alignItems: "center"}}>
                     Amount
-                    {sort.field === "amount" ? sort.direction === 1 ? <ArrowDownAZ className={styles.sortIcon} /> : <ArrowUpAZ className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
+                    {sort.field === "amount" ? sort.direction === 1 ? <ArrowDown01 className={styles.sortIcon} /> : <ArrowUp10 className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
                   </div>
                 </th>
                 <th>Description</th>
                 <th onClick={() => handleSort("date")} style={{cursor: "pointer"}} title="Click to sort by Transaction Date">
                   <div style={{display: "flex", alignItems: "center"}}>
                     Transaction Date
-                    {sort.field === "date" ? sort.direction === 1 ? <ArrowDownAZ className={styles.sortIcon} /> : <ArrowUpAZ className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
+                    {sort.field === "date" ? sort.direction === 1 ? <ArrowDown01 className={styles.sortIcon} /> : <ArrowUp10 className={styles.sortIcon} /> : <ArrowDownUp className={styles.sortIcon} />}
                   </div>
                 </th>
               </tr>
@@ -105,7 +105,7 @@ const WalletTransaction = () => {
               {transactions?.map((transaction, index) => (
                 <tr key={index}>
                   <td>{transaction._id}</td>
-                  <td style={{textTransform: "capitalize"}}>{transaction.type}</td>
+                  <td>{transaction.type}</td>
                   <td>₹ {transaction.amount}</td>
                   <td>{transaction.description}</td>
                   <td>{dayjs(transaction.date).format("DD-MM-YYYY")}</td>

@@ -11,12 +11,13 @@ class TransactionService {
 
   async getTransactions(query) {
     let {walletId, isExport, skip, limit, sortField, sortDirection} = query
+    console.log(query)
     let sortBy = {}
     if (sortField) {
       sortBy[sortField] = parseInt(sortDirection)
     }
     if (isExport === "true") {
-      const transactions = await Transaction.find({walletId}, {_id: 0, walletId: 0, __v: 0}).sort(sortBy).lean()
+      const transactions = await Transaction.find({walletId}, {_id: 0, walletId: 0, __v: 0}).sort({date: 1}).lean()
       return transactions
     } else {
       skip = parseInt(skip) || 0
