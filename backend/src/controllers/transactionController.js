@@ -148,7 +148,7 @@ export const createTransaction = asyncHandler(async (req, res) => {
     // Send the transaction response
     res.json(result)
   } catch (error) {
-    console.log(error.stack)
+    console.error(error.stack)
     res.status(500).json({message: error.message})
   }
 })
