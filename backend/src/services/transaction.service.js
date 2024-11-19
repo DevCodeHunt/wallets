@@ -1,8 +1,8 @@
 import Transaction from "../models/Transaction.js"
 class TransactionService {
-  // async createTransaction(transaction) {
-  //   return await Transaction.create(transaction)
-  // }
+  async createTransaction(transaction) {
+    return await Transaction.create(transaction)
+  }
 
   async getTransactions(query) {
     let {walletId, isExport, skip, limit, sortField, sortDirection} = query
@@ -24,10 +24,13 @@ class TransactionService {
     }
   }
 
+  /*
+  uncomment the code while using the mongodb transactions
+
   async createTransaction(transaction, session) {
-    console.log("transaction", transaction)
     return await Transaction.create([transaction], {session})
   }
+  */
 }
 
 const transactionService = new TransactionService()
