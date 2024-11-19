@@ -17,14 +17,12 @@ class WalletService {
     return updatedWallet
   }
   async updateWalletBalance(walletId, amount) {
-    console.log(amount)
     const precisionFactor = 10000
     const wallet = await Wallet.findById(walletId)
     if (!wallet) {
       throw new Error("Wallet not found")
     }
     const newBalance = Math.round((wallet.balance + amount) * precisionFactor) / precisionFactor
-    console.log(newBalance)
     const updatedWallet = await Wallet.findOneAndUpdate({_id: walletId}, {$set: {balance: newBalance}}, {new: true})
 
     if (!updatedWallet) {

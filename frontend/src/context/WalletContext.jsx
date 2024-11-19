@@ -4,7 +4,7 @@ import {getWallet} from "../services/walletService"
 export const WalletContext = createContext({})
 
 export const WalletContextProvider = ({children}) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [activeWalletId, setActiveWalletId] = useState(localStorage.getItem("activeWalletId"))
 
@@ -13,7 +13,7 @@ export const WalletContextProvider = ({children}) => {
     const loadWalletData = async () => {
       setIsLoading(true)
       try {
-        const data = await getWallet(activeWalletId)
+        const data = await getWallet(localStorage.getItem("activeWalletId") || null)
         setWallet(data)
       } catch (error) {
         setError(error)
@@ -21,7 +21,7 @@ export const WalletContextProvider = ({children}) => {
         setIsLoading(false)
       }
     }
-    if (activeWalletId) loadWalletData()
+    loadWalletData()
   }, [activeWalletId])
 
   return (

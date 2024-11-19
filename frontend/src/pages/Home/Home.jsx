@@ -17,10 +17,7 @@ const Home = () => {
   return (
     <>
       {openWalletTransactionModal && <WalletTransactionModal setOpen={setOpenWalletTransactionModal} />}
-      <div className={`container ${styles.walletContainer}`}>
-        {isLoading ? <Overlay /> : null}
-        {activeWallet?.id ? <Wallet wallet={activeWallet} handleOpenstartTransactionModal={handleOpenstartTransactionModal} /> : <WalletForm />}
-      </div>
+      <div className={`container ${styles.walletContainer}`}>{isLoading ? <Overlay /> : activeWallet?.id ? <Wallet wallet={activeWallet} handleOpenstartTransactionModal={handleOpenstartTransactionModal} /> : <WalletForm />}</div>
     </>
   )
 }

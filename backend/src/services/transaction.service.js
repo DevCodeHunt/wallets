@@ -11,7 +11,7 @@ class TransactionService {
       sortBy = {[sortField]: parseInt(sortDirection)}
     }
     if (isExport === "true") {
-      const transactions = await Transaction.find({walletId}, {_id: 0, walletId: 0, __v: 0}).sort({date: 1}).lean()
+      const transactions = await Transaction.find({walletId}).sort({date: 1}).lean()
       return transactions
     } else {
       skip = parseInt(skip) || 0
